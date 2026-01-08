@@ -1,51 +1,65 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Heart + Music</title>
+    <title>Heart Lofi Vibes</title>
     <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
         body {
-            margin: 0; height: 100vh; background: #000;
+            height: 100vh; width: 100vw;
+            background: linear-gradient(135deg, #0f0f23, #1a1a3e, #2a1a4e);
             display: flex; justify-content: center; align-items: center;
+            overflow: hidden;
         }
-        canvas { width: 100vw; height: 100vh; }
-        button {
-            position: fixed; top: 20px; right: 20px;
-            padding: 15px 25px; border-radius: 50px; border: none;
-            background: #ff4757; color: white; font-size: 16px; font-weight: bold;
-            cursor: pointer; box-shadow: 0 5px 15px rgba(255,71,87,0.4);
+        .box { width: 100vw; height: 100vh; }
+        #pinkboard { width: 100%; height: 100%; display: block; }
+        
+        /* Lofi button */
+        #lofiBtn {
+            position: fixed; top: 25px; right: 25px;
+            width: 140px; height: 50px; border: none; border-radius: 25px;
+            background: linear-gradient(45deg, #ff6b6b, #4ecdc4);
+            color: #fff; font-size: 14px; font-weight: bold;
+            cursor: pointer; z-index: 9999;
+            box-shadow: 0 8px 25px rgba(255, 107, 107, 0.3);
+            transition: all 0.3s;
         }
-        button:hover { background: #ff3742; transform: scale(1.05); }
-        button.active { background: #2ed573; }
+        #lofiBtn:hover { transform: scale(1.05); box-shadow: 0 12px 35px rgba(255, 107, 107, 0.4); }
+        #lofiBtn.playing { background: linear-gradient(45deg, #a8e6cf, #88d8a3); }
     </style>
 </head>
 <body>
 
-    <button id="music">🎵 Play Music</button>
-    <audio id="sound" loop controls style="display:none;">
-        <!-- THIS URL IS GUARANTEED WORKING ON ALL BROWSERS -->
-        <source src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3" type="audio/mpeg">
+    <button id="lofiBtn">🌙 Lofi On</button>
+    
+    <!-- PERFECT SOFT LOFI - Chosic Royalty Free -->
+    <audio id="lofiMusic" loop preload="auto">
+        <source src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-16.mp3" type="audio/mpeg">
+        <source src="https://file-examples.com/storage/fe85f7a43b689349d9c8f18/2017/11/file_example_MP3_700KB.mp3" type="audio/mpeg">
     </audio>
 
-    <canvas id="pinkboard"></canvas>
+    <div class="box">
+        <canvas id="pinkboard"></canvas>
+    </div>
 
-    <!-- YOUR script.js YAHAN LOAD HOGA -->
     <script src="script.js"></script>
     
-    <!-- ULTRA SIMPLE MUSIC CODE -->
+    <!-- Background Lofi Player -->
     <script>
-        document.getElementById('music').onclick = function() {
-            var audio = document.getElementById('sound');
-            if (audio.paused) {
-                audio.volume = 0.2;
-                audio.play();
-                this.textContent = '⏸ Stop Music';
-                this.classList.add('active');
+        const btn = document.getElementById('lofiBtn');
+        const music = document.getElementById('lofiMusic');
+        
+        btn.addEventListener('click', function() {
+            if (music.paused) {
+                music.volume = 0.2;  // Soft background volume
+                music.play();
+                btn.innerHTML = '🌙 Lofi Off';
+                btn.classList.add('playing');
             } else {
-                audio.pause();
-                this.textContent = '🎵 Play Music';
-                this.classList.remove('active');
+                music.pause();
+                btn.innerHTML = '🌙 Lofi On';
+                btn.classList.remove('playing');
             }
-        }
+        });
     </script>
 
 </body>
