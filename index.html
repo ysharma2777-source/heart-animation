@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>heart aanimation</title>
+    <meta name="Generator" content="EditPlus" />
+    <meta name="Author" content="" />
+    <meta name="Keywords" content="" />
+    <meta name="Description" content="" />
+    <link rel="stylesheet" href="styles.css" />
+    <style>
+        /* Simple play button styling */
+        #music-btn {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            padding: 8px 14px;
+            border: none;
+            border-radius: 20px;
+            background: #ff4b6b;
+            color: #fff;
+            font-size: 14px;
+            cursor: pointer;
+            z-index: 9999;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Music button -->
+    <button id="music-btn">Play Music</button>
+
+    <!-- Audio element (your mp3 path yaha daalo) -->
+    <audio id="bg-music" src="music.mp3" loop></audio>
+
+    <div class="box">
+        <canvas id="pinkboard"></canvas>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
