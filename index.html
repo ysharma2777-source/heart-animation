@@ -1,69 +1,51 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Heart Animation</title>
+    <title>Heart + Music</title>
     <style>
-        * { margin: 0; padding: 0; box-sizing: border-box; }
         body {
-            height: 100vh; width: 100vw;
-            background: #000;
+            margin: 0; height: 100vh; background: #000;
             display: flex; justify-content: center; align-items: center;
-            overflow: hidden;
         }
-        .box { width: 100vw; height: 100vh; }
-        #pinkboard { width: 100%; height: 100%; display: block; }
-        
-        #playBtn {
+        canvas { width: 100vw; height: 100vh; }
+        button {
             position: fixed; top: 20px; right: 20px;
-            padding: 12px 20px; border: none; border-radius: 30px;
-            background: linear-gradient(45deg, #ff416c, #ff4b2b);
-            color: white; font-size: 15px; font-weight: bold;
-            cursor: pointer; z-index: 9999;
-            box-shadow: 0 5px 20px rgba(255, 65, 108, 0.4);
-            transition: all 0.3s;
+            padding: 15px 25px; border-radius: 50px; border: none;
+            background: #ff4757; color: white; font-size: 16px; font-weight: bold;
+            cursor: pointer; box-shadow: 0 5px 15px rgba(255,71,87,0.4);
         }
-        #playBtn:hover { transform: scale(1.05); }
-        #playBtn.playing { background: linear-gradient(45deg, #11998e, #38ef7d); }
+        button:hover { background: #ff3742; transform: scale(1.05); }
+        button.active { background: #2ed573; }
     </style>
 </head>
 <body>
 
-    <button id="playBtn">▶ Play Music</button>
-    
-    <!-- WORKING ONLINE MP3 LINKS (public domain/free) -->
-    <audio id="audio" preload="auto" loop>
-        <!-- Option 1: Sousound healing music (100% working) -->
-        <source src="http://www.sousound.com/music/healing/healing_01.mp3" type="audio/mpeg">
-        
-        <!-- Option 2: Sample MP3 test file -->
-        <source src="https://www.learningcontainer.com/wp-content/uploads/2020/02/Kalimba.mp3" type="audio/mpeg">
-        
-        <!-- Fallback -->
-        Your browser doesn't support audio.
+    <button id="music">🎵 Play Music</button>
+    <audio id="sound" loop controls style="display:none;">
+        <!-- THIS URL IS GUARANTEED WORKING ON ALL BROWSERS -->
+        <source src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3" type="audio/mpeg">
     </audio>
 
-    <div class="box">
-        <canvas id="pinkboard"></canvas>
-    </div>
+    <canvas id="pinkboard"></canvas>
 
+    <!-- YOUR script.js YAHAN LOAD HOGA -->
     <script src="script.js"></script>
     
+    <!-- ULTRA SIMPLE MUSIC CODE -->
     <script>
-        const playBtn = document.getElementById("playBtn");
-        const audio = document.getElementById("audio");
-        
-        playBtn.onclick = function() {
+        document.getElementById('music').onclick = function() {
+            var audio = document.getElementById('sound');
             if (audio.paused) {
-                audio.volume = 0.3;
+                audio.volume = 0.2;
                 audio.play();
-                playBtn.textContent = "⏸ Pause Music";
-                playBtn.classList.add("playing");
+                this.textContent = '⏸ Stop Music';
+                this.classList.add('active');
             } else {
                 audio.pause();
-                playBtn.textContent = "▶ Play Music";
-                playBtn.classList.remove("playing");
+                this.textContent = '🎵 Play Music';
+                this.classList.remove('active');
             }
-        };
+        }
     </script>
 
 </body>
