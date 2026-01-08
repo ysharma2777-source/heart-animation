@@ -4,7 +4,6 @@
     <title>heart aanimation</title>
     <meta name="Generator" content="EditPlus" />
     <style>
-        /* Body: full screen + black background + center container */
         body {
             margin: 0;
             padding: 0;
@@ -28,7 +27,6 @@
             display: block;
         }
 
-        /* Music button - fixed top-right */
         #music-btn {
             position: fixed;
             top: 20px;
@@ -59,10 +57,7 @@
 
 <body>
 
-    <!-- Music button -->
     <button id="music-btn">▶ Play Music</button>
-
-    <!-- Audio element - music.mp3 ko same folder me rakha hona chahiye -->
     <audio id="bg-music" src="music.mp3" loop preload="auto"></audio>
 
     <div class="box">
@@ -71,26 +66,29 @@
 
     <script src="script.js"></script>
 
-    <!-- Music JS code - ye script.js se alag kar diya direct inline -->
+    <!-- FIXED Music code - different variable names use kiye -->
     <script>
-        const musicBtn = document.getElementById("music-btn");
-        const bgMusic = document.getElementById("bg-music");
+        // Different names use kiye taaki script.js se conflict na ho
+        const playButton = document.getElementById("music-btn");
+        const audioPlayer = document.getElementById("bg-music");
 
-        if (musicBtn && bgMusic) {
-            musicBtn.addEventListener("click", function () {
-                if (bgMusic.paused) {
-                    bgMusic.volume = 0.4;  // volume low rakha heart animation ke liye
-                    bgMusic.play().then(() => {
-                        musicBtn.textContent = "⏸ Pause Music";
-                        musicBtn.classList.add("playing");
-                    }).catch(err => {
-                        console.log("Audio play failed:", err);
-                        musicBtn.textContent = "❌ Audio Error";
-                    });
+        if (playButton && audioPlayer) {
+            playButton.addEventListener("click", function() {
+                if (audioPlayer.paused) {
+                    audioPlayer.volume = 0.4;
+                    // Promise support nahi hai to simple play() use kiya
+                    try {
+                        audioPlayer.play();
+                        playButton.textContent = "⏸ Pause Music";
+                        playButton.classList.add("playing");
+                    } catch (error) {
+                        console.log("Audio play error:", error);
+                        playButton.textContent = "❌ Audio Error";
+                    }
                 } else {
-                    bgMusic.pause();
-                    musicBtn.textContent = "▶ Play Music";
-                    musicBtn.classList.remove("playing");
+                    audioPlayer.pause();
+                    playButton.textContent = "▶ Play Music";
+                    playButton.classList.remove("playing");
                 }
             });
         }
@@ -99,5 +97,4 @@
 </body>
 </html>
 
-       
  
