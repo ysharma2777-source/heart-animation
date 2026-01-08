@@ -3,14 +3,6 @@
 <head>
     <title>heart aanimation</title>
     <meta name="Generator" content="EditPlus" />
-    <meta name="Author" content="" />
-    <meta name="Keywords" content="" />
-    <meta name="Description" content="" />
-
-    <!-- Agar external CSS use karna ho to ye rakh sakta hai
-    <link rel="stylesheet" href="styles.css" />
-    -->
-
     <style>
         /* Body: full screen + black background + center container */
         body {
@@ -18,34 +10,94 @@
             padding: 0;
             height: 100vh;
             width: 100vw;
-            background-color: #000;       /* black background */
-            display: flex;                /* flexbox */
-            justify-content: center;      /* horizontal center */
-            align-items: center;          /* vertical center */
-            overflow: hidden;             /* scroll bar hata dega */
+            background-color: #000;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden;
         }
 
-        /* Container jo canvas ko hold karega */
         .box {
             width: 100vw;
             height: 100vh;
         }
 
-        /* Canvas ko container fill karwa diya */
         #pinkboard {
             width: 100%;
             height: 100%;
             display: block;
+        }
+
+        /* Music button - fixed top-right */
+        #music-btn {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            padding: 10px 16px;
+            border: none;
+            border-radius: 25px;
+            background: linear-gradient(45deg, #ff4b6b, #ff8e8e);
+            color: white;
+            font-size: 14px;
+            font-weight: bold;
+            cursor: pointer;
+            z-index: 9999;
+            box-shadow: 0 4px 15px rgba(255, 75, 107, 0.4);
+            transition: all 0.3s ease;
+        }
+
+        #music-btn:hover {
+            transform: scale(1.05);
+            box-shadow: 0 6px 20px rgba(255, 75, 107, 0.6);
+        }
+
+        #music-btn.playing {
+            background: linear-gradient(45deg, #4bc0c8, #8ee5ff);
         }
     </style>
 </head>
 
 <body>
 
+    <!-- Music button -->
+    <button id="music-btn">▶ Play Music</button>
+
+    <!-- Audio element - music.mp3 ko same folder me rakha hona chahiye -->
+    <audio id="bg-music" src="music.mp3" loop preload="auto"></audio>
+
     <div class="box">
         <canvas id="pinkboard"></canvas>
     </div>
 
     <script src="script.js"></script>
+
+    <!-- Music JS code - ye script.js se alag kar diya direct inline -->
+    <script>
+        const musicBtn = document.getElementById("music-btn");
+        const bgMusic = document.getElementById("bg-music");
+
+        if (musicBtn && bgMusic) {
+            musicBtn.addEventListener("click", function () {
+                if (bgMusic.paused) {
+                    bgMusic.volume = 0.4;  // volume low rakha heart animation ke liye
+                    bgMusic.play().then(() => {
+                        musicBtn.textContent = "⏸ Pause Music";
+                        musicBtn.classList.add("playing");
+                    }).catch(err => {
+                        console.log("Audio play failed:", err);
+                        musicBtn.textContent = "❌ Audio Error";
+                    });
+                } else {
+                    bgMusic.pause();
+                    musicBtn.textContent = "▶ Play Music";
+                    musicBtn.classList.remove("playing");
+                }
+            });
+        }
+    </script>
+
 </body>
 </html>
+
+       
+ 
