@@ -1,100 +1,79 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>heart aanimation</title>
-    <meta name="Generator" content="EditPlus" />
+    <title>Heart Animation</title>
     <style>
-        body {
+        * {
             margin: 0;
             padding: 0;
+            box-sizing: border-box;
+        }
+        body {
             height: 100vh;
             width: 100vw;
-            background-color: #000;
+            background: #000;
             display: flex;
             justify-content: center;
             align-items: center;
             overflow: hidden;
         }
-
-        .box {
-            width: 100vw;
-            height: 100vh;
-        }
-
-        #pinkboard {
-            width: 100%;
-            height: 100%;
-            display: block;
-        }
-
+        .box { width: 100vw; height: 100vh; }
+        #pinkboard { width: 100%; height: 100%; display: block; }
+        
         #music-btn {
             position: fixed;
             top: 20px;
             right: 20px;
-            padding: 10px 16px;
+            padding: 12px 20px;
             border: none;
-            border-radius: 25px;
-            background: linear-gradient(45deg, #ff4b6b, #ff8e8e);
+            border-radius: 30px;
+            background: linear-gradient(45deg, #ff416c, #ff4b2b);
             color: white;
-            font-size: 14px;
+            font-size: 15px;
             font-weight: bold;
             cursor: pointer;
             z-index: 9999;
-            box-shadow: 0 4px 15px rgba(255, 75, 107, 0.4);
-            transition: all 0.3s ease;
+            box-shadow: 0 5px 20px rgba(255, 65, 108, 0.4);
         }
-
-        #music-btn:hover {
-            transform: scale(1.05);
-            box-shadow: 0 6px 20px rgba(255, 75, 107, 0.6);
-        }
-
-        #music-btn.playing {
-            background: linear-gradient(45deg, #4bc0c8, #8ee5ff);
-        }
+        #music-btn:hover { transform: scale(1.05); }
+        #music-btn.playing { background: linear-gradient(45deg, #11998e, #38ef7d); }
     </style>
 </head>
-
 <body>
 
-    <button id="music-btn">▶ Play Music</button>
-    <audio id="bg-music" src="music.mp3" loop preload="auto"></audio>
+    <button id="playBtn">▶ Play Music</button>
+    
+    <!-- Multiple audio formats try karega -->
+    <audio id="audio" preload="auto" loop>
+        <source src="music.mp3" type="audio/mpeg">
+        <source src="music.ogg" type="audio/ogg">
+        Your browser doesn't support audio.
+    </audio>
 
     <div class="box">
         <canvas id="pinkboard"></canvas>
     </div>
 
     <script src="script.js"></script>
-
-    <!-- FIXED Music code - different variable names use kiye -->
+    
+    <!-- Simple audio code -->
     <script>
-        // Different names use kiye taaki script.js se conflict na ho
-        const playButton = document.getElementById("music-btn");
-        const audioPlayer = document.getElementById("bg-music");
-
-        if (playButton && audioPlayer) {
-            playButton.addEventListener("click", function() {
-                if (audioPlayer.paused) {
-                    audioPlayer.volume = 0.4;
-                    // Promise support nahi hai to simple play() use kiya
-                    try {
-                        audioPlayer.play();
-                        playButton.textContent = "⏸ Pause Music";
-                        playButton.classList.add("playing");
-                    } catch (error) {
-                        console.log("Audio play error:", error);
-                        playButton.textContent = "❌ Audio Error";
-                    }
-                } else {
-                    audioPlayer.pause();
-                    playButton.textContent = "▶ Play Music";
-                    playButton.classList.remove("playing");
-                }
-            });
-        }
+        const playBtn = document.getElementById("playBtn");
+        const audio = document.getElementById("audio");
+        
+        playBtn.onclick = function() {
+            if (audio.paused) {
+                audio.volume = 0.3;
+                audio.play();
+                playBtn.textContent = "⏸ Pause";
+                playBtn.classList.add("playing");
+            } else {
+                audio.pause();
+                playBtn.textContent = "▶ Play Music";
+                playBtn.classList.remove("playing");
+            }
+        };
     </script>
 
 </body>
 </html>
-
- 
